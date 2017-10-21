@@ -97,21 +97,33 @@ class homepage extends page
         $form = '<form action="index.php?page=homepage" method="post"
 	enctype="multipart/form-data">';
         $form .= '<input type="file" name="fileToUpload" id="fileToUpload">';
-        $form .= '<input type="submit" value="Upload Image" name="submit">';
+        $form .= '<input type="submit" value="Upload CSV" name="submit">';
         $form .= '</form> ';
+        echo $form;
         $this->html .= '<h1>Upload Form</h1>';
         $this->html .= $form;
 
     }
 
     public function post() {
-        echo 'test';
-        print_r($_FILES);
+        $target_dir = "uploads/";
+        $target_file = $target_dir . basename($_FILES["fileToUpload"]["tmp_name"]);
+        $FileType = pathinfo($target_file,PATHINFO_EXTENSION);
+        // Check if file is a csv file
+        if(isset($_POST["submit"])) {
+           $fileName=$_FILES["fileToUpload"]["name"];
+           move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], 'uploads/' . $_FILES["fileToUpload"]["name"]);
+           header("Location: http://web.njit.edu/~nnu2/wsdproject1/index.php?page=htmlTable&filename=".$_FILES["fileToUpload"]["name"]);
+}
     }
 }
 
 
 
-class htmlTable extends page {}
+class htmlTable extends page {
+public function get(){
+echo '1';
+}
+}
 
 ?>
