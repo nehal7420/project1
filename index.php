@@ -122,7 +122,19 @@ class homepage extends page
 
 class htmlTable extends page {
 public function get(){
-echo '1';
+$csvFile=$_REQUEST["filename"];
+
+echo "<table>\n\n";
+$file1 = fopen("uploads/".$csvFile, "r");
+while (($line = fgetcsv($file1)) !== false) {
+        echo "<tr>";
+        foreach ($line as $data) {
+                echo "<td>" . htmlspecialchars($data) . "</td>";
+        }
+        echo "</tr>\n";
+}
+fclose($file1);
+echo "\n</html>";
 }
 }
 
