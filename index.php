@@ -8,18 +8,10 @@ error_reporting(E_ALL);
 //instantiate the program object
 
 //Class to load classes it finds the file when the progrm starts to fail for calling a missing class
-/*class Manage {
-    public static function autoload($class) {
-        //you can put any file name or directory here
-        include $class . '.php';
-    }
-}
 
-spl_autoload_register(array('Manage', 'autoload'));*/
 
 //instantiate the program object
 $obj = new main();
-
 
 class main {
 
@@ -58,12 +50,11 @@ abstract class page {
     }
     public function __destruct()
     {
-        $this->html .= '</body></html>';
-        //stringFunctions::printThis($this->html);
+        echo $this->html .= '</body></html>';
+        //stringFunctions::printThis ($this->html);
     }
 
     public function get() {
-        echo 'default get message';
     }
 
     public function post() {
@@ -71,23 +62,6 @@ abstract class page {
     }
 }
 
-/*class homepage extends page {
-
-    public function get() {
-
-        $form = '<form action="index2.php" method="post">';
-        $form .= 'First name:<br>';
-        $form .= '<input type="text" name="firstname" value="Mickey">';
-        $form .= '<br>';
-        $form .= 'Last name:<br>';
-        $form .= '<input type="text" name="lastname" value="Mouse">';
-        $form .= '<input type="submit" value="Submit">';
-        $form .= '</form> ';
-        $this->html .= 'homepage';
-        $this->html .= $form;
-    }
-
-}*/
 
 class homepage extends page
 {
@@ -99,7 +73,6 @@ class homepage extends page
         $form .= '<input type="file" name="fileToUpload" id="fileToUpload">';
         $form .= '<input type="submit" value="Upload CSV" name="submit">';
         $form .= '</form> ';
-        echo $form;
         $this->html .= '<h1>Upload Form</h1>';
         $this->html .= $form;
 
@@ -123,18 +96,19 @@ class homepage extends page
 class htmlTable extends page {
 public function get(){
 $csvFile=$_REQUEST["filename"];
-
-echo "<table>\n\n";
+$form ='';
+$form .= '<table border="1">';
 $file1 = fopen("uploads/".$csvFile, "r");
 while (($line = fgetcsv($file1)) !== false) {
-        echo "<tr>";
+        $form .= '<tr>';
         foreach ($line as $data) {
-                echo "<td>" . htmlspecialchars($data) . "</td>";
+                $form .= '<td>' . htmlspecialchars($data) . '</td>';
         }
-        echo "</tr>\n";
+        $form .= '</tr>';
 }
+echo $form;
 fclose($file1);
-echo "\n</html>";
+"\n</html>";
 }
 }
 
